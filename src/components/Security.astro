@@ -1,0 +1,46 @@
+---
+// This month is evidence, not decoration: update it by hand whenever any of the
+// four statements below changes. Never derive it from the build date.
+const factsAsOf = 'September 2026';
+---
+
+<section id="security" aria-label="Security">
+  <h2>Your ledger stays yours.</h2>
+  <p class="lead">Financial records are the most sensitive thing a firm handles. Here is how we treat them, so you can hold us to it.</p>
+
+  <dl class="ledger">
+    <div class="ledger__row">
+      <dt class="ledger__label">HOW IT WORKS</dt>
+      <dd class="ledger__text">TieBook takes a ledger export in and returns finished workpapers. There is no platform to sign into and no server that keeps&nbsp;your&nbsp;books.</dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">WHAT WE HOLD</dt>
+      <dd class="ledger__text">Outside a signed engagement, nothing. Abren runs no customer accounts and stores no client&nbsp;records.</dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">BEFORE ANY DATA MOVES</dt>
+      <dd class="ledger__text">A written data-handling agreement comes first — what we receive, who handles it, and how it is returned or deleted. No&nbsp;agreement, no&nbsp;data.</dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">IF SOMETHING IS WRONG</dt>
+      <dd class="ledger__text">Write to <a class="report" href="mailto:security@abrensystems.com">security@abrensystems.com</a>. It reaches the person who built&nbsp;the&nbsp;product.</dd>
+    </div>
+  </dl>
+
+  <p class="note footnote">Current as of {factsAsOf}. Updated when the facts change.</p>
+</section>
+
+<style>
+  h2 {
+    max-width: 720px;
+  }
+
+  .report {
+    text-decoration: underline 1px var(--abren-accent);
+    text-underline-offset: 3px;
+  }
+
+  .footnote {
+    margin-top: 16px;
+  }
+</style>

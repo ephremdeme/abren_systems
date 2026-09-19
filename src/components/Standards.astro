@@ -1,0 +1,131 @@
+<section id="standards" aria-label="Standards">
+  <div class="head">
+    <h2>What every Abren product must be.</h2>
+    <p class="stamp">ABREN STANDARD — EVIDENCE BEFORE ASSERTION</p>
+  </div>
+
+  <ol class="standards">
+    <li class="standard standard--filled">
+      <p class="standard__number">01</p>
+      <h3>TRACEABLE</h3>
+      <p class="standard__text">Outputs lead back to their source.</p>
+    </li>
+    <li class="standard standard--outlined">
+      <p class="standard__number">02</p>
+      <h3>REVIEWABLE</h3>
+      <p class="standard__text">Software prepares the work. A person makes the decision.</p>
+    </li>
+    <li class="standard standard--accent">
+      <p class="standard__number">03</p>
+      <h3>VERIFIED</h3>
+      <p class="standard__text">Draft and verified states are different things.</p>
+    </li>
+    <li class="standard standard--filled">
+      <p class="standard__number">04</p>
+      <h3>MAINTAINED</h3>
+      <p class="standard__text">What ships is maintained as the workflow changes.</p>
+    </li>
+  </ol>
+</section>
+
+<style>
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px 48px;
+    flex-wrap: wrap;
+  }
+
+  h2 {
+    max-width: 640px;
+  }
+
+  .stamp {
+    margin: 8px 0 0;
+    padding: 8px 12px;
+    border: 1px solid var(--abren-accent);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    line-height: 1.5;
+    color: var(--abren-accent);
+  }
+
+  /* Four across, then 2 × 2, then one column — never 3 + 1. */
+  .standards {
+    margin: 72px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 48px 40px;
+  }
+
+  @media (max-width: 1099px) {
+    .standards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 639px) {
+    .standards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .standard {
+    position: relative;
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    margin-top: 3px;
+    padding-top: 40px;
+    border-top: 1px solid var(--abren-rule-strong);
+  }
+
+  /* The datum marker sitting on the rule. */
+  .standard::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -4px;
+    width: 7px;
+    height: 7px;
+  }
+
+  .standard--filled::before {
+    background: var(--abren-ink);
+  }
+
+  .standard--outlined::before {
+    border: 1px solid var(--abren-ink);
+    background: var(--abren-ground);
+  }
+
+  .standard--accent::before {
+    background: var(--abren-accent);
+  }
+
+  .standard__number {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .1em;
+    color: var(--abren-annotation);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: .06em;
+  }
+
+  .standard__text {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--abren-ink-2);
+  }
+</style>

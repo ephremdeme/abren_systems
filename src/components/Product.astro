@@ -1,0 +1,89 @@
+---
+import specimenWebp from '../assets/specimen.webp';
+import specimenJpg from '../assets/specimen.jpg';
+---
+
+<section id="product" aria-label="Product">
+  <h2>Workpapers a reviewer can trust, because every number shows where it came from.</h2>
+  <p class="lead">TieBook takes a union's general-ledger data and prepares the workpapers for the revised Form LM-2 — mapped, reconciled, and ready for the accountant's review.</p>
+
+  <dl class="ledger">
+    <div class="ledger__row">
+      <dt class="ledger__label">TRACEABILITY</dt>
+      <dd class="ledger__text">Each output figure carries its path back to the ledger lines it came&nbsp;from.</dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">RECONCILIATION</dt>
+      <dd class="ledger__text">Totals are reconciled against the ledger; differences are surfaced, not&nbsp;absorbed.</dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">MAPPING LOGIC</dt>
+      <dd class="ledger__text">The rule that maps a ledger account to an LM-2 line is shown beside the&nbsp;result.</dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">OUTPUTS</dt>
+      <dd class="ledger__text">Workpapers are produced as documents a reviewer can file, annotate, and hand to the next&nbsp;person.</dd>
+    </div>
+  </dl>
+
+  <figure>
+    <picture>
+      <source srcset={specimenWebp.src} type="image/webp" />
+      <img
+        src={specimenJpg.src}
+        width={specimenJpg.width}
+        height={specimenJpg.height}
+        alt="TieBook workpaper: Schedule 22 payee disbursements with traced entry counts, line totals, and the tie to Statement B item 56. Synthetic demonstration data."
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+    <figcaption class="note">TieBook workpaper — traceability view. Synthetic demonstration data.</figcaption>
+  </figure>
+
+  <p class="closing"><span>TieBook is the first product built and maintained by Abren Systems.</span><a href="https://gettiebook.com">gettiebook.com <span class="arrow" aria-hidden="true">→</span></a></p>
+</section>
+
+<style>
+  h2 {
+    max-width: 820px;
+  }
+
+  figure {
+    margin: 48px 0 0;
+  }
+
+  picture {
+    display: block;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--abren-rule-figure);
+  }
+
+  figcaption {
+    margin-top: 12px;
+  }
+
+  .closing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    align-items: baseline;
+    margin: 40px 0 0;
+    max-width: 640px;
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .closing a {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+</style>

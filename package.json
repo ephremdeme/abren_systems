@@ -9,20 +9,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro build && wrangler pages dev",
-    "astro": "astro",
-    "generate-types": "wrangler types",
     "deploy": "astro build && wrangler pages deploy",
-    "cf-typegen": "wrangler types"
+    "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^14.3.2",
     "astro": "^7.3.3"
   },
   "allowScripts": {
     "esbuild": true
   },
   "devDependencies": {
-    "@types/node": "^26.6.2",
     "wrangler": "^4.135.0"
   }
 }

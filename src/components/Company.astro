@@ -1,0 +1,62 @@
+<section id="company" aria-label="Company">
+  <h2>Small by design</h2>
+  <p class="lead">Abren is deliberately small. The person who designs a product also builds it, maintains it, and answers for it — so when you have a question, you reach the person who can act on it.</p>
+
+  <dl class="ledger">
+    <div class="ledger__row">
+      <dt class="ledger__label">FOUNDER</dt>
+      <dd class="ledger__text">Ephrem Demelash Demise · <a class="founder-email" href="mailto:ephrem@abrensystems.com">ephrem@abrensystems.com</a></dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">ENTITY</dt>
+      <dd class="ledger__text">Abren Systems LLC · New Mexico, formed 2026</dd>
+    </div>
+    <div class="ledger__row">
+      <dt class="ledger__label">MAILING ADDRESS</dt>
+      <dd class="ledger__text">
+        <details>
+          <summary>Show address <span class="sign" aria-hidden="true"></span></summary>
+          <address>1209 Mountain Road Pl NE, Ste N<br />Albuquerque, NM 87110</address>
+        </details>
+      </dd>
+    </div>
+  </dl>
+</section>
+
+<style>
+  section {
+    padding-bottom: clamp(96px, 10vw, 140px);
+  }
+
+  .founder-email {
+    border-bottom: 1px solid rgba(23, 22, 15, .3);
+  }
+
+  summary {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    color: var(--abren-ink-2);
+  }
+
+  summary:hover {
+    color: var(--abren-ink);
+  }
+
+  .sign {
+    color: var(--abren-accent);
+  }
+
+  .sign::before {
+    content: "+";
+  }
+
+  details[open] .sign::before {
+    content: "−";
+  }
+
+  address {
+    margin-top: 8px;
+    font-style: normal;
+  }
+</style>

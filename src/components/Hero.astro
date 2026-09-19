@@ -1,0 +1,74 @@
+<section class="hero" id="top" aria-label="Introduction">
+  <p class="identity">
+    <span>Abren Systems LLC</span><span aria-hidden="true">·</span><span>New Mexico</span><span aria-hidden="true">·</span><span>Formed 2026</span>
+  </p>
+  <h1>Abren Systems builds focused software for specialized work.</h1>
+  <p class="hero-lede">We work where general-purpose tools stop being enough — workflows where accuracy, traceability, and domain understanding matter.</p>
+
+  <a class="tiebook" href="https://gettiebook.com">
+    <span class="tiebook__label">PRODUCT</span>
+    <span class="tiebook__body">
+      <span class="tiebook__name">TieBook</span>
+      <span class="tiebook__summary">Review-ready LM-2 workpapers from general-ledger data. The software prepares; the accountant reviews and decides.</span>
+    </span>
+    <span class="tiebook__cta">Explore TieBook <span class="arrow" aria-hidden="true">→</span></span>
+  </a>
+</section>
+
+<style>
+  .tiebook {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 40px;
+    align-items: baseline;
+    margin-top: clamp(64px, 8vw, 120px);
+    padding: 28px 0;
+    border-top: 1px solid var(--abren-ink);
+    border-bottom: 1px solid var(--abren-rule);
+  }
+
+  /* The row already carries the accent in its arrow; the text stays ink. */
+  .tiebook:hover {
+    color: var(--abren-ink);
+  }
+
+  .tiebook__label {
+    flex: 0 0 120px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .1em;
+    color: var(--abren-annotation);
+  }
+
+  .tiebook__body {
+    min-width: 0;
+    flex: 1 1 360px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    align-items: baseline;
+  }
+
+  .tiebook__name {
+    font-size: clamp(24px, 2.4vw, 32px);
+    font-weight: 500;
+    letter-spacing: -.02em;
+  }
+
+  .tiebook__summary {
+    flex: 1 1 260px;
+    max-width: 560px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--abren-ink-2);
+    text-wrap: pretty;
+  }
+
+  .tiebook__cta {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 16px;
+  }
+</style>

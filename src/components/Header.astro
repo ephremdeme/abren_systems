@@ -1,0 +1,84 @@
+<header class="shell">
+  <a class="wordmark" href="/#top" aria-label="Abren Systems">
+    <span class="wordmark__name">ABREN</span>
+    <span class="wordmark__rule" aria-hidden="true"></span>
+    <span class="wordmark__kind">SYSTEMS</span>
+  </a>
+  <nav aria-label="Primary">
+    <a href="/#product">Product</a>
+    <a href="/#standards">Standards</a>
+    <a href="/#security">Security</a>
+    <a href="/#company">Company</a>
+    <a class="contact" href="mailto:ephrem@abrensystems.com">Contact Ephrem <span class="arrow" aria-hidden="true">→</span></a>
+  </nav>
+</header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 28px 0 22px;
+    border-bottom: 1px solid var(--abren-rule);
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .wordmark__name {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    line-height: 1;
+  }
+
+  .wordmark__rule {
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background: var(--abren-ink);
+    transform: translateY(1px);
+  }
+
+  .wordmark__kind {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .32em;
+    line-height: 1;
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+  }
+
+  nav a:not(.contact) {
+    color: var(--abren-annotation);
+  }
+
+  nav a:not(.contact):hover {
+    color: var(--abren-ink);
+  }
+
+  .contact {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--abren-ink);
+    white-space: nowrap;
+  }
+
+  .contact:hover {
+    color: var(--abren-accent);
+    border-color: var(--abren-accent);
+  }
+</style>
