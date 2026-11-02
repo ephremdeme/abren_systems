@@ -1,0 +1,199 @@
+---
+import specimenWebp from '../assets/specimen.webp';
+import specimenJpg from '../assets/specimen.jpg';
+import phoneWebp from '../assets/hustle-street-iphone.webp';
+import phoneJpg from '../assets/hustle-street-iphone.jpg';
+---
+
+<section id="products" aria-label="Products">
+  <h2>Our products.</h2>
+
+  <article id="tiebook">
+    <p class="kind">LM-2 WORKPAPERS</p>
+    <h3>TieBook</h3>
+    <p class="lead">Workpapers a reviewer can trust, because every number shows where it came from. TieBook takes a union's general-ledger data and prepares the workpapers for the revised Form LM-2 — mapped, reconciled, and ready for the accountant's review.</p>
+
+    <dl class="ledger">
+      <div class="ledger__row">
+        <dt class="ledger__label">TRACEABILITY</dt>
+        <dd class="ledger__text">Each output figure carries its path back to the ledger lines it came&nbsp;from.</dd>
+      </div>
+      <div class="ledger__row">
+        <dt class="ledger__label">RECONCILIATION</dt>
+        <dd class="ledger__text">Totals are reconciled against the ledger; differences are surfaced, not&nbsp;absorbed.</dd>
+      </div>
+      <div class="ledger__row">
+        <dt class="ledger__label">MAPPING LOGIC</dt>
+        <dd class="ledger__text">The rule that maps a ledger account to an LM-2 line is shown beside the&nbsp;result.</dd>
+      </div>
+      <div class="ledger__row">
+        <dt class="ledger__label">OUTPUTS</dt>
+        <dd class="ledger__text">Workpapers are produced as documents a reviewer can file, annotate, and hand to the next&nbsp;person.</dd>
+      </div>
+    </dl>
+
+    <figure class="specimen">
+      <picture>
+        <source srcset={specimenWebp.src} type="image/webp" />
+        <img
+          src={specimenJpg.src}
+          width={specimenJpg.width}
+          height={specimenJpg.height}
+          alt="TieBook workpaper: Schedule 22 payee disbursements with traced entry counts, line totals, and the tie to Statement B item 56. Synthetic demonstration data."
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      <figcaption class="note">TieBook workpaper — traceability view. Synthetic demonstration data.</figcaption>
+    </figure>
+
+    <p class="closing"><a href="https://gettiebook.com">Explore TieBook at gettiebook.com <span class="arrow" aria-hidden="true">→</span></a></p>
+  </article>
+
+  <article id="hustle-street">
+    <div class="split">
+      <div class="copy">
+        <p class="kind">MOBILE GAME · COMING SOON</p>
+        <h3>Hustle Street</h3>
+        <p class="lead">Two to four players roll around one city block, buy and sell shops in four industries, and race on net worth over seven or ten in-game&nbsp;days.</p>
+
+        <dl class="ledger">
+          <div class="ledger__row">
+            <dt class="ledger__label">HOW IT PLAYS</dt>
+            <dd class="ledger__text">Prices rise when players buy and fall when they sell. A daily forecast hints at tomorrow's move, so timing beats&nbsp;luck.</dd>
+          </div>
+          <div class="ledger__row">
+            <dt class="ledger__label">MODES</dt>
+            <dd class="ledger__text">Solo against three computer rivals, pass-and-play with friends on one phone, a daily challenge, and a solo&nbsp;career.</dd>
+          </div>
+          <div class="ledger__row">
+            <dt class="ledger__label">PLATFORMS</dt>
+            <dd class="ledger__text">Planned for iPhone and Android, built from one&nbsp;codebase.</dd>
+          </div>
+          <div class="ledger__row">
+            <dt class="ledger__label">STATUS</dt>
+            <dd class="ledger__text">In development. Planned for release on the App Store and Google&nbsp;Play.</dd>
+          </div>
+          <div class="ledger__row">
+            <dt class="ledger__label">BUSINESS MODEL</dt>
+            <dd class="ledger__text">Planned: the core game is free, with one optional purchase for extra districts. No ads, and nothing you buy changes who&nbsp;wins.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <figure class="phone">
+        <picture>
+          <source srcset={phoneWebp.src} type="image/webp" />
+          <img
+            src={phoneJpg.src}
+            width={phoneJpg.width}
+            height={phoneJpg.height}
+            alt="Hustle Street game screen on Day 4: a board of twelve shops around four market price towers, rival tokens on a net-worth track, and the Roll button."
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+        <figcaption class="note">Hustle Street — in-development screen, shown in an iPhone&nbsp;frame.</figcaption>
+      </figure>
+    </div>
+  </article>
+</section>
+
+<style>
+  article {
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-top: 28px;
+    border-top: 1px solid var(--abren-ink);
+    scroll-margin-top: 24px;
+  }
+
+  article + article {
+    margin-top: clamp(72px, 9vw, 120px);
+  }
+
+  .kind {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    line-height: 1.55;
+    color: var(--abren-ink-2);
+  }
+
+  h3 {
+    margin: 12px 0 0;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.12;
+    font-weight: 500;
+    letter-spacing: -.025em;
+  }
+
+  .ledger {
+    margin-top: 48px;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .specimen {
+    margin-top: 48px;
+  }
+
+  picture {
+    display: block;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .specimen img {
+    border: 1px solid var(--abren-rule-figure);
+  }
+
+  figcaption {
+    margin-top: 12px;
+  }
+
+  .closing {
+    margin: 32px 0 0;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .closing a {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 56px;
+  }
+
+  .copy {
+    min-width: 0;
+  }
+
+  .phone {
+    width: min(340px, 100%);
+  }
+
+  @media (min-width: 1200px) {
+    .split {
+      grid-template-columns: minmax(0, 760px) minmax(0, 1fr);
+      column-gap: 64px;
+      align-items: start;
+    }
+
+    .phone {
+      width: min(300px, 100%);
+      justify-self: end;
+    }
+  }
+</style>
