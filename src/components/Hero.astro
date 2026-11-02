@@ -3,72 +3,112 @@
     <span>Abren Systems LLC</span><span aria-hidden="true">·</span><span>New Mexico</span><span aria-hidden="true">·</span><span>Formed 2026</span>
   </p>
   <h1>Abren Systems builds focused software for specialized work.</h1>
-  <p class="hero-lede">We work where general-purpose tools stop being enough — workflows where accuracy, traceability, and domain understanding matter.</p>
+  <p class="hero-lede">We build our own products and custom software for business clients, where accuracy, traceability, and domain understanding&nbsp;matter.</p>
 
-  <a class="tiebook" href="https://gettiebook.com">
-    <span class="tiebook__label">PRODUCT</span>
-    <span class="tiebook__body">
-      <span class="tiebook__name">TieBook</span>
-      <span class="tiebook__summary">Review-ready LM-2 workpapers from general-ledger data. The software prepares; the accountant reviews and decides.</span>
-    </span>
-    <span class="tiebook__cta">Explore TieBook <span class="arrow" aria-hidden="true">→</span></span>
-  </a>
+  <div class="products">
+    <a class="row" href="https://gettiebook.com">
+      <span class="row__label">PRODUCT</span>
+      <span class="row__name">TieBook</span>
+      <span class="row__summary">Review-ready LM-2 workpapers from general-ledger data. The software prepares; the accountant reviews and&nbsp;decides.</span>
+      <span class="row__cta">Explore TieBook <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+    <a class="row" href="/#game">
+      <span class="row__label">PRODUCT</span>
+      <span class="row__name">Hustle Street</span>
+      <span class="row__summary">A business strategy board game for iPhone and Android. Buy shops on a city block, read the market, and out-deal your&nbsp;rivals.</span>
+      <span class="row__status">COMING SOON</span>
+    </a>
+  </div>
 </section>
 
 <style>
-  .tiebook {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px 40px;
-    align-items: baseline;
+  .products {
     margin-top: clamp(64px, 8vw, 120px);
-    padding: 28px 0;
     border-top: 1px solid var(--abren-ink);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 640px);
+    column-gap: 40px;
+    row-gap: 12px;
+    align-items: baseline;
+    padding: 28px 0;
     border-bottom: 1px solid var(--abren-rule);
   }
 
+  .row > :not(:first-child) {
+    grid-column: 2;
+  }
+
   /* The row already carries the accent in its arrow; the text stays ink. */
-  .tiebook:hover {
+  .row:hover {
     color: var(--abren-ink);
   }
 
-  .tiebook__label {
-    flex: 0 0 120px;
+  .row__label,
+  .row__status {
     font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: .1em;
+    font-size: 11px;
+    letter-spacing: .12em;
+    line-height: 1.55;
+  }
+
+  .row__label {
+    color: var(--abren-ink-2);
+  }
+
+  .row__status {
     color: var(--abren-annotation);
+    white-space: nowrap;
   }
 
-  .tiebook__body {
-    min-width: 0;
-    flex: 1 1 360px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 32px;
-    align-items: baseline;
-  }
-
-  .tiebook__name {
-    font-size: clamp(24px, 2.4vw, 32px);
+  .row__name {
+    font-size: clamp(24px, 2.4vw, 30px);
+    line-height: 1.15;
     font-weight: 500;
     letter-spacing: -.02em;
+    white-space: nowrap;
   }
 
-  .tiebook__summary {
-    flex: 1 1 260px;
-    max-width: 560px;
+  .row__summary {
+    max-width: 520px;
     font-size: 17px;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--abren-ink-2);
     text-wrap: pretty;
   }
 
-  .tiebook__cta {
-    margin-left: auto;
+  .row__cta {
     display: flex;
     gap: 10px;
-    align-items: center;
+    align-items: baseline;
     font-size: 16px;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 1100px) {
+    .row {
+      grid-template-columns: 200px 200px minmax(0, 1fr) auto;
+    }
+
+    .row > :not(:first-child) {
+      grid-column: auto;
+    }
+
+    .row > :last-child {
+      justify-self: end;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .row {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 8px;
+    }
+
+    .row > :not(:first-child) {
+      grid-column: 1;
+    }
   }
 </style>
