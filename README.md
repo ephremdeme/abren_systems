@@ -51,7 +51,7 @@ Or push a build straight from a workstation with `npm run deploy`.
 - Copy is frozen by the design brief. Text changes go through design, not code.
 - Accent (`--abren-accent`) budget: the 03 standards marker, the standards stamp,
   the `→` arrows, link hover, the focus ring, the `+`/`−` on the address toggle,
-  and the underline under `security@`. Nothing else.
+  the underline under `security@`, and the bar in the logo mark. Nothing else.
 
 ## Fonts
 
