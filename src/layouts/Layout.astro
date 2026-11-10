@@ -14,7 +14,8 @@ const {
   noindex = false,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// build.format 'file' gives pathnames ending in .html; Cloudflare Pages serves them without it.
+const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, ''), Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
 ---
 
