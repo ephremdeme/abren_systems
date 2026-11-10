@@ -4,7 +4,11 @@ const year = new Date().getFullYear();
 
 <footer class="shell">
   <span>Abren — <span lang="am">አብረን</span> — means "together" in Amharic.</span>
-  <span>© {year}</span>
+  <span class="links">
+    <a href="/hustle-street/privacy">Hustle Street privacy</a>
+    <a href="/hustle-street/support">Hustle Street support</a>
+    <span>© {year}</span>
+  </span>
 </footer>
 
 <style>
@@ -22,6 +26,20 @@ const year = new Date().getFullYear();
     letter-spacing: .04em;
     line-height: 1.6;
     color: var(--abren-annotation);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+
+  .links a {
+    color: var(--abren-annotation);
+  }
+
+  .links a:hover {
+    color: var(--abren-ink);
   }
 
   /* Ethiopic glyphs come from a system font; Plex does not carry them. */

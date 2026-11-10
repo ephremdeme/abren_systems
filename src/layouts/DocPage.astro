@@ -1,0 +1,93 @@
+---
+// Plain reading page for policy and support documents: site header and footer,
+// one narrow text column, no scripts.
+import Layout from './Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main>
+    <div class="shell">
+      <article class="doc">
+        <slot />
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .doc {
+    max-width: 680px;
+    padding: clamp(56px, 8vw, 112px) 0 clamp(72px, 9vw, 128px);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-wrap: break-word;
+  }
+
+  .doc :global(h1) {
+    margin: 20px 0 0;
+    font-size: clamp(34px, 5vw, 56px);
+  }
+
+  .doc :global(h2) {
+    margin: 48px 0 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--abren-rule);
+    font-size: 22px;
+    letter-spacing: -.015em;
+  }
+
+  .doc :global(h3) {
+    margin: 32px 0 0;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .doc :global(p),
+  .doc :global(ul) {
+    margin: 14px 0 0;
+    color: var(--abren-ink-2);
+    text-wrap: pretty;
+  }
+
+  .doc :global(ul) {
+    padding-left: 22px;
+  }
+
+  .doc :global(li + li) {
+    margin-top: 6px;
+  }
+
+  .doc :global(strong) {
+    font-weight: 500;
+    color: var(--abren-ink);
+  }
+
+  .doc :global(p a),
+  .doc :global(li a) {
+    border-bottom: 1px solid var(--abren-rule-strong);
+  }
+
+  .doc :global(p a:hover),
+  .doc :global(li a:hover) {
+    border-color: var(--abren-accent);
+  }
+
+  .doc :global(.meta) {
+    margin-top: 20px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .04em;
+    color: var(--abren-annotation);
+  }
+</style>

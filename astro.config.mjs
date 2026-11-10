@@ -4,7 +4,9 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://abrensystems.com',
-  build: { inlineStylesheets: 'always' }, // one small page: ship CSS inline, one request
+  // 'file' emits hustle-street/privacy.html, which Cloudflare Pages serves at
+  // /hustle-street/privacy with no trailing-slash redirect — store listings link there.
+  build: { inlineStylesheets: 'always', format: 'file' }, // one small page: ship CSS inline, one request
   fonts: [
     {
       provider: fontProviders.local(),
