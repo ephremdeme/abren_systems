@@ -1,0 +1,125 @@
+---
+// The official App Store and Google Play badges, unmodified. A store that isn't live (see
+// src/config/stores.ts) shows its badge faded, with "Coming soon", and is not a link.
+//
+// Order: Google Play first by default; /hustle-street.js marks iOS visitors
+// (html[data-platform="ios"]) so the App Store comes first for them. On phone widths the second
+// badge is smaller, but never under Apple's 40 px minimum.
+import { storeUrl, type Store } from '../../config/stores';
+
+interface Props {
+  /** Light text for "Coming soon" on dark backgrounds. */
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { tone = 'dark', class: extra } = Astro.props;
+
+const badges: { store: Store; label: string; src: string; width: number; height: number }[] = [
+  { store: 'google-play', label: 'Get it on Google Play', src: '/badges/google-play.png', width: 646, height: 250 },
+  { store: 'app-store', label: 'Download on the App Store', src: '/badges/app-store.svg', width: 120, height: 40 },
+];
+---
+
+<div class:list={['badges', `badges--${tone}`, extra]}>
+  {badges.map((b) => {
+    const url = storeUrl(b.store);
+    const img = <img src={b.src} width={b.width} height={b.height} alt={url ? b.label : ''} decoding="async" />;
+    return url ? (
+      <a class:list={['badge', `badge--${b.store}`]} href={url} rel="noopener">
+        {img}
+      </a>
+    ) : (
+      <span class:list={['badge', `badge--${b.store}`, 'is-soon']}>
+        {img}
+        <span class="soon"><span class="sr-only">{b.label}: </span>Coming soon</span>
+      </span>
+    );
+  })}
+</div>
+
+<style>
+  .badges {
+    --h: 44px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 20px;
+  }
+
+  .badge {
+    --bh: var(--h);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: inherit;
+  }
+
+  .badge img {
+    display: block;
+    width: auto;
+    height: var(--bh);
+  }
+
+  /* Google's PNG carries 41/168 of its badge height as clear space on every side. Size it so
+     the badge itself is as tall as Apple's, and let the clear space overlap the gap. */
+  .badge--google-play img {
+    height: calc(var(--bh) * 250 / 168);
+    margin: calc(var(--bh) * -41 / 168);
+  }
+
+  .is-soon img {
+    opacity: .38;
+  }
+
+  .soon {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--abren-annotation);
+    white-space: nowrap;
+  }
+
+  .badges--light .soon {
+    color: rgba(255, 255, 255, .78);
+  }
+
+  .badge--google-play {
+    order: 1;
+  }
+
+  .badge--app-store {
+    order: 2;
+  }
+
+  :global([data-platform="ios"]) .badge--app-store {
+    order: 0;
+  }
+
+  @media (max-width: 639px) {
+    .badges {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .badge {
+      --bh: 40px;
+    }
+
+    .badge--google-play {
+      --bh: 50px;
+    }
+
+    :global([data-platform="ios"]) .badge--app-store {
+      --bh: 50px;
+    }
+
+    :global([data-platform="ios"]) .badge--google-play {
+      --bh: 40px;
+    }
+  }
+</style>

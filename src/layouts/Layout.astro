@@ -6,17 +6,22 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** A path under public/, e.g. '/og-hustle-street.jpg' (1200 × 630). */
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
 const {
   title = 'Abren Systems — focused software for specialized work',
   description = 'We build our own products and custom software for business clients, where accuracy, traceability, and domain understanding matter.',
   noindex = false,
+  ogImage: ogImagePath = '/og.png',
+  ogImageAlt = 'Abren Systems logo',
 } = Astro.props;
 
 // build.format 'file' gives pathnames ending in .html; Cloudflare Pages serves them without it.
 const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, ''), Astro.site);
-const ogImage = new URL('/og.png', Astro.site);
+const ogImage = new URL(ogImagePath, Astro.site);
 ---
 
 <!doctype html>
@@ -40,10 +45,11 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta property="og:image" content={ogImage.href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Abren Systems logo" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <Font cssVariable="--font-sans" preload />
     <Font cssVariable="--font-mono" preload />
+    <slot name="head" />
   </head>
   <body>
     <div class="page">

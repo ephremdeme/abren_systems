@@ -1,8 +1,12 @@
 ---
 import specimenWebp from '../assets/specimen.webp';
 import specimenJpg from '../assets/specimen.jpg';
-import phoneWebp from '../assets/hustle-street-iphone.webp';
-import phoneJpg from '../assets/hustle-street-iphone.jpg';
+import { Image } from 'astro:assets';
+import StoreBadges from './hustle/StoreBadges.astro';
+import appIcon from '../assets/hustle-street/app-icon.png';
+import frame1 from '../assets/hustle-street/frames/01-hero.webp';
+import frame2 from '../assets/hustle-street/frames/02-forecast.webp';
+import frame3 from '../assets/hustle-street/frames/03-rivals.webp';
 ---
 
 <section id="products" aria-label="Products">
@@ -50,51 +54,39 @@ import phoneJpg from '../assets/hustle-street-iphone.jpg';
     <p class="closing"><a href="https://gettiebook.com">Explore TieBook at gettiebook.com <span class="arrow" aria-hidden="true">→</span></a></p>
   </article>
 
-  <article id="hustle-street">
-    <div class="split">
-      <div class="copy">
-        <p class="kind">MOBILE GAME · COMING SOON</p>
-        <h3>Hustle Street</h3>
-        <p class="lead">Two to four players roll around one city block, buy and sell shops in four industries, and race on net worth over seven or ten in-game&nbsp;days.</p>
-
-        <dl class="ledger">
-          <div class="ledger__row">
-            <dt class="ledger__label">HOW IT PLAYS</dt>
-            <dd class="ledger__text">Prices rise when players buy and fall when they sell. A daily forecast hints at tomorrow's move, so timing beats&nbsp;luck.</dd>
-          </div>
-          <div class="ledger__row">
-            <dt class="ledger__label">MODES</dt>
-            <dd class="ledger__text">Solo against three computer rivals, pass-and-play with friends on one phone, a daily challenge, and a solo&nbsp;career.</dd>
-          </div>
-          <div class="ledger__row">
-            <dt class="ledger__label">PLATFORMS</dt>
-            <dd class="ledger__text">Planned for iPhone and Android, built from one&nbsp;codebase.</dd>
-          </div>
-          <div class="ledger__row">
-            <dt class="ledger__label">STATUS</dt>
-            <dd class="ledger__text">In development. Planned for release on the App Store and Google&nbsp;Play.</dd>
-          </div>
-          <div class="ledger__row">
-            <dt class="ledger__label">BUSINESS MODEL</dt>
-            <dd class="ledger__text">Free to play, with optional one-time purchases that unlock extra districts. Nothing you buy changes who&nbsp;wins.</dd>
-          </div>
-        </dl>
+  <article id="hustle-street" class="hs">
+    <div class="hs__copy">
+      <p class="kind">MOBILE GAME · IPHONE AND ANDROID</p>
+      <div class="hs__title">
+        <Image src={appIcon} alt="" width={64} height={64} widths={[64, 128]} sizes="64px" class="hs__icon" loading="lazy" />
+        <h3><a class="hs__link" href="/hustle-street">Hustle Street</a></h3>
       </div>
+      <p class="lead">A cozy trading board game. Buy before the price rises, sell before it&nbsp;falls.</p>
 
-      <figure class="phone">
-        <picture>
-          <source srcset={phoneWebp.src} type="image/webp" />
-          <img
-            src={phoneJpg.src}
-            width={phoneJpg.width}
-            height={phoneJpg.height}
-            alt="Hustle Street game screen on Day 4: a board of twelve shops around four market price towers, rival tokens on a net-worth track, and the Roll button."
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
-        <figcaption class="note">Hustle Street — in-development screen, shown in an iPhone&nbsp;frame.</figcaption>
-      </figure>
+      <ul class="hs__points">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg>
+          See tomorrow's price move
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2" /><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" /><circle cx="17" cy="9" r="2.6" /><path d="M16 14.2c2.9.2 5 2.6 5 5.8" /></svg>
+          2–4 players on one phone, or play AI rivals
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M6 6l12 12" /></svg>
+          No ads. Plays offline.
+        </li>
+      </ul>
+
+      <StoreBadges class="hs__badges" />
+
+      <p class="hs__see"><a href="/hustle-street">See the game <span class="arrow" aria-hidden="true">→</span></a></p>
+    </div>
+
+    <div class="hs__frames">
+      <Image src={frame2} alt="Store screenshot: See tomorrow's price move." widths={[200, 400]} sizes="200px" class="hs__frame hs__frame--l" loading="lazy" />
+      <Image src={frame3} alt="Store screenshot: Outsmart your rivals." widths={[200, 400]} sizes="200px" class="hs__frame hs__frame--r" loading="lazy" />
+      <Image src={frame1} alt="Store screenshot: Buy before it rises. The Bakery is for sale on the board." widths={[220, 440]} sizes="220px" class="hs__frame hs__frame--c" loading="lazy" />
     </div>
   </article>
 </section>
@@ -170,30 +162,185 @@ import phoneJpg from '../assets/hustle-street-iphone.jpg';
     align-items: center;
   }
 
-  .split {
+  /* Hustle Street: a consumer product, so a card with pictures. The whole card links to the
+     product page (the title's link stretches over it); the badges and links sit above it. */
+  .hs {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    row-gap: 56px;
+    border: 1px solid var(--abren-rule-strong);
+    border-radius: 20px;
+    background: #fbfaf6;
+    overflow: hidden;
+    padding: 0;
+    transition: border-color 120ms ease;
   }
 
-  .copy {
+  .hs:hover {
+    border-color: var(--abren-ink);
+  }
+
+  .hs:has(.hs__link:focus-visible) {
+    outline: 1px solid var(--abren-accent);
+    outline-offset: 4px;
+  }
+
+  .hs__copy {
+    padding: clamp(24px, 4vw, 48px);
     min-width: 0;
   }
 
-  .phone {
-    width: min(340px, 100%);
+  .hs__title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
   }
 
-  @media (min-width: 1200px) {
-    .split {
-      grid-template-columns: minmax(0, 760px) minmax(0, 1fr);
-      column-gap: 64px;
-      align-items: start;
+  .hs__title h3 {
+    margin: 0;
+  }
+
+  .hs :global(.hs__icon) {
+    width: 64px;
+    height: 64px;
+    border-radius: 15px;
+    box-shadow: 0 0 0 1px rgba(23, 22, 15, .1);
+    flex: none;
+  }
+
+  .hs__link {
+    color: inherit;
+  }
+
+  .hs__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hs__link:focus-visible {
+    outline: none;
+  }
+
+  .hs .lead {
+    margin-top: 20px;
+    font-size: 20px;
+    color: var(--abren-ink);
+  }
+
+  .hs__points {
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--abren-ink-2);
+  }
+
+  .hs__points li {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .hs__points svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: var(--abren-accent);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  :global(.hs__badges) {
+    margin-top: 36px;
+  }
+
+  .hs__see {
+    position: relative;
+    z-index: 1;
+    margin: 28px 0 0;
+    font-size: 16px;
+  }
+
+  .hs__see a {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--abren-ink);
+  }
+
+  .hs__see a:hover {
+    border-color: var(--abren-accent);
+  }
+
+  .hs__frames {
+    position: relative;
+    min-height: 380px;
+    background:
+      radial-gradient(120% 80% at 50% 100%, rgba(201, 65, 31, .16), transparent 60%),
+      #2a201a;
+    overflow: hidden;
+  }
+
+  .hs :global(.hs__frame) {
+    position: absolute;
+    bottom: -18%;
+    left: 50%;
+    width: 46%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .6);
+  }
+
+  .hs :global(.hs__frame--c) {
+    z-index: 2;
+    max-width: 220px;
+    bottom: -12%;
+    transform: translateX(-50%);
+  }
+
+  .hs :global(.hs__frame--l) {
+    transform: translateX(-112%) rotate(-8deg);
+  }
+
+  .hs :global(.hs__frame--r) {
+    transform: translateX(12%) rotate(8deg);
+  }
+
+  @media (min-width: 960px) {
+    .hs {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     }
 
-    .phone {
-      width: min(300px, 100%);
-      justify-self: end;
+    .hs__frames {
+      min-height: 0;
+    }
+
+    .hs :global(.hs__frame) {
+      bottom: auto;
+      top: 50%;
+      width: 40%;
+    }
+
+    .hs :global(.hs__frame--c) {
+      transform: translate(-50%, -50%);
+    }
+
+    .hs :global(.hs__frame--l) {
+      transform: translate(-118%, -46%) rotate(-8deg);
+    }
+
+    .hs :global(.hs__frame--r) {
+      transform: translate(18%, -46%) rotate(8deg);
     }
   }
 </style>

@@ -1,0 +1,911 @@
+---
+// Hustle Street's product page. Every fact here comes from the web kit's README (16 Nov 2026).
+// One small script, /hustle-street.js (store order by platform, the screenshot arrows); the page
+// works without it. The day/night crossfade is CSS only. The JSON-LD below is data, not script.
+import { Image } from 'astro:assets';
+import QRCode from 'qrcode';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Phone from '../components/hustle/Phone.astro';
+import StoreBadges from '../components/hustle/StoreBadges.astro';
+import { storeUrl, appStoreId } from '../config/stores';
+
+import appIcon from '../assets/hustle-street/app-icon.png';
+import streetNight from '../assets/hustle-street/art/street-night.webp';
+import streetDay from '../assets/hustle-street/art/street-day.webp';
+import rivalSam from '../assets/hustle-street/art/rival-sam.webp';
+import rivalRita from '../assets/hustle-street/art/rival-rita.webp';
+import rivalLeo from '../assets/hustle-street/art/rival-leo.webp';
+import darkBuyOffer from '../assets/hustle-street/dark/buy-offer.webp';
+import darkOvernight from '../assets/hustle-street/dark/overnight.webp';
+import darkPlusHarbour from '../assets/hustle-street/dark/plus-harbour.webp';
+import buyOffer from '../assets/hustle-street/light/buy-offer.webp';
+import boughtBrilliant from '../assets/hustle-street/light/bought-brilliant.webp';
+import dealSealed from '../assets/hustle-street/light/deal-sealed.webp';
+import fourPlayers from '../assets/hustle-street/light/four-players.webp';
+import results from '../assets/hustle-street/light/results.webp';
+import album from '../assets/hustle-street/light/album.webp';
+import f1 from '../assets/hustle-street/frames/01-hero.webp';
+import f2 from '../assets/hustle-street/frames/02-forecast.webp';
+import f3 from '../assets/hustle-street/frames/03-rivals.webp';
+import f4 from '../assets/hustle-street/frames/04-one-phone.webp';
+import f5 from '../assets/hustle-street/frames/05-night.webp';
+import f6 from '../assets/hustle-street/frames/06-wins.webp';
+import f7 from '../assets/hustle-street/frames/07-album.webp';
+import f8 from '../assets/hustle-street/frames/08-plus.webp';
+
+const title = 'Hustle Street: a cozy trading board game · Abren Systems';
+const description = 'Buy before the price rises, sell before it falls. A board game for 1–4 players on one phone. No ads, plays offline.';
+const pageUrl = new URL('/hustle-street', Astro.site).href;
+
+const frames = [
+  { src: f1, alt: 'Buy before it rises. The Bakery is for sale on the board.' },
+  { src: f2, alt: "See tomorrow's price move. The forecast shows which industry rises." },
+  { src: f3, alt: 'Outsmart your rivals. A deal on the table with an AI rival.' },
+  { src: f4, alt: '2–4 players. One phone. Four players around one board.' },
+  { src: f5, alt: 'Your street lights up at night. The street after dark.' },
+  { src: f6, alt: 'Every shop counts at the bell. The results of a game.' },
+  { src: f7, alt: '24 landmarks. Never bought. The Street Album.' },
+  { src: f8, alt: '3 new districts. One purchase. The Hustle Street Plus page.' },
+];
+
+const rivals = [
+  { src: rivalSam, name: 'Sam' },
+  { src: rivalRita, name: 'Rita' },
+  { src: rivalLeo, name: 'Leo' },
+];
+
+const districts = [
+  { name: 'Harbour', line: 'Earn ferry fares.' },
+  { name: 'Old Town', line: 'Full sets pay more rent.' },
+  { name: 'Neon Row', line: 'Bigger price swings.' },
+];
+
+// A QR code for each store that is live, for desktop visitors to scan with their phone.
+const qrs = await Promise.all(
+  [
+    { label: 'App Store', url: storeUrl('app-store') },
+    { label: 'Google Play', url: storeUrl('google-play') },
+  ]
+    .filter((q): q is { label: string; url: string } => q.url !== null)
+    .map(async (q) => ({
+      ...q,
+      svg: await QRCode.toString(q.url, { type: 'svg', margin: 1, color: { dark: '#17160f', light: '#ffffff' } }),
+    })),
+);
+
+const appId = appStoreId();
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Hustle Street',
+  description,
+  url: pageUrl,
+  image: new URL('/og-hustle-street.jpg', Astro.site).href,
+  operatingSystem: 'iOS, Android',
+  applicationCategory: 'GameApplication',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  publisher: { '@type': 'Organization', name: 'Abren Systems', url: new URL('/', Astro.site).href },
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage="/og-hustle-street.jpg"
+  ogImageAlt="Hustle Street: Buy before it rises. A lit street at night."
+>
+  <Fragment slot="head">
+    {appId && <meta name="apple-itunes-app" content={`app-id=${appId}`} />}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline src="/hustle-street.js" defer></script>
+  </Fragment>
+
+  <Header />
+
+  <main class="hs-page">
+    <!-- 1. Hero -->
+    <section class="hero-hs bleed" aria-labelledby="hs-title">
+      <Image
+        src={streetNight}
+        alt=""
+        widths={[640, 1244]}
+        sizes="100vw"
+        class="hero-hs__art"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="hero-hs__inner">
+        <div class="hero-hs__copy">
+          <Image src={appIcon} alt="" widths={[72, 144]} sizes="72px" class="hero-hs__icon" loading="eager" />
+          <h1 id="hs-title">Hustle Street</h1>
+          <p class="hero-hs__line">Buy before it rises.</p>
+          <p class="hero-hs__sub">A cozy trading board game for 1–4 players on one phone.</p>
+          <StoreBadges tone="light" class="hero-hs__badges" />
+          <ul class="pills" aria-label="At a glance">
+            <li>No ads</li>
+            <li>Plays offline</li>
+            <li>Ages 9+</li>
+          </ul>
+        </div>
+        <Phone
+          src={darkBuyOffer}
+          width={300}
+          priority
+          class="hero-hs__phone"
+          alt="The Bakery is for sale for $20; the forecast says Food rises 2 tomorrow."
+        />
+      </div>
+    </section>
+
+    <!-- 2. How it plays -->
+    <section class="block" aria-labelledby="how">
+      <h2 id="how">How it plays.</h2>
+      <ol class="steps">
+        <li>
+          <p class="step-n">1</p>
+          <h3>Read the market</h3>
+          <p>The forecast shows tomorrow's price move, and it's always true. Here, Food rises&nbsp;2.</p>
+          <Phone src={buyOffer} width={260} alt="The Bakery is for sale; the forecast says Food rises 2 tomorrow." />
+        </li>
+        <li>
+          <p class="step-n">2</p>
+          <h3>Buy before it rises</h3>
+          <p>Buying pushes a price up; selling pushes it down. Buy the Bakery before Food&nbsp;rises.</p>
+          <Phone src={boughtBrilliant} width={260} alt="The Bakery is bought, and the move is graded Brilliant." />
+        </li>
+        <li>
+          <p class="step-n">3</p>
+          <h3>Make deals</h3>
+          <p>Trade shops and cash with your rivals.</p>
+          <Phone src={dealSealed} width={260} alt="A deal with Sam is sealed." />
+        </li>
+      </ol>
+    </section>
+
+    <!-- 3. Play your way -->
+    <section class="block" aria-labelledby="ways">
+      <h2 id="ways">Play your way.</h2>
+      <div class="ways">
+        <div class="way">
+          <h3>Together on one phone</h3>
+          <p>Pass the phone between 2–4 players. AI rivals fill the empty&nbsp;seats.</p>
+          <ul class="rivals" aria-label="The AI rivals">
+            {rivals.map((r) => (
+              <li>
+                <Image src={r.src} alt={`${r.name}, an AI rival (illustration)`} widths={[72, 144]} sizes="72px" loading="lazy" />
+                <span>{r.name}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="note">Sam, Rita and Leo are illustrated AI rivals, not real people.</p>
+          <Phone src={fourPlayers} width={260} alt="Four players around one board, with a deal on the table." />
+        </div>
+        <div class="way">
+          <h3>Solo</h3>
+          <p>Clever AI rivals, Quick or Classic games, a daily Today's Street, and a solo&nbsp;Career.</p>
+          <ul class="modes">
+            <li>Quick or Classic games</li>
+            <li>Today's Street, every day</li>
+            <li>A solo Career</li>
+            <li>Secret goals</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Your street, day to night -->
+    <section class="night bleed" aria-labelledby="street">
+      <div class="night__inner">
+        <div class="night__copy">
+          <h2 id="street">Your street, day to night.</h2>
+          <p class="night__lede">Every game grows My Street. The lamps come on at&nbsp;night.</p>
+          <div class="fade">
+            <figure class="fade__day">
+              <Image src={streetDay} alt="My Street by day: shops along one block." widths={[640, 1244]} sizes="(min-width: 960px) 640px, 100vw" loading="lazy" />
+              <figcaption class="note">Day</figcaption>
+            </figure>
+            <figure class="fade__night">
+              <Image src={streetNight} alt="The same street at night, with the lamps and shop windows lit." widths={[640, 1244]} sizes="(min-width: 960px) 640px, 100vw" loading="lazy" />
+              <figcaption class="note">Night</figcaption>
+            </figure>
+          </div>
+        </div>
+        <Phone src={darkOvernight} width={260} class="night__phone" alt="The overnight screen: the day ends and the forecast lands." />
+      </div>
+    </section>
+
+    <!-- 5. Win, and keep what you earn -->
+    <section class="block" aria-labelledby="win">
+      <h2 id="win">Win, and keep what you earn.</h2>
+      <div class="pair">
+        <figure>
+          <Phone src={results} width={260} alt="The results screen: every shop is counted at the bell." />
+          <figcaption>Every shop counts at the bell.</figcaption>
+        </figure>
+        <figure>
+          <Phone src={album} width={260} alt="The Street Album, with landmarks earned by playing." />
+          <figcaption>24 landmarks, earned by playing. Never bought.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 6. Hustle Street Plus -->
+    <section class="block plus" aria-labelledby="plus">
+      <div class="plus__copy">
+        <h2 id="plus">Hustle Street Plus.</h2>
+        <p class="lead">Main Street and Today's Street are free to play. Plus adds three districts, each with its own&nbsp;twist.</p>
+        <ul class="districts">
+          {districts.map((d) => (
+            <li>
+              <h3>{d.name}</h3>
+              <p>{d.line}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="plus__terms">One optional purchase. All three districts, plus every future one. Yours to keep, with Family&nbsp;Sharing.</p>
+      </div>
+      <Phone src={darkPlusHarbour} width={280} class="plus__phone" alt="The Plus page for Harbour: ferries charge no rent, and every rival who passes yours pays you $1." />
+    </section>
+
+    <!-- 7. Screenshots -->
+    <section class="block" aria-labelledby="shots">
+      <h2 id="shots">Screenshots.</h2>
+      <div class="shots-wrap" data-shots>
+        <button type="button" class="shots__btn shots__btn--prev" data-prev aria-label="Previous screenshots">←</button>
+        <button type="button" class="shots__btn shots__btn--next" data-next aria-label="Next screenshots">→</button>
+        <ul class="shots" tabindex="0" aria-label="Hustle Street screenshots, scroll sideways">
+          {frames.map((f) => (
+            <li>
+              <Image src={f.src} alt={f.alt} widths={[240, 480]} sizes="240px" loading="lazy" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8. Fair by design -->
+    <section class="block" aria-labelledby="fair">
+      <h2 id="fair">Fair by design.</h2>
+      <ul class="fair">
+        <li><strong>No ads.</strong></li>
+        <li><strong>No subscriptions.</strong></li>
+        <li><strong>Nothing you can buy changes who wins.</strong></li>
+        <li><strong>Plays offline.</strong></li>
+      </ul>
+    </section>
+
+    <!-- 9. Final call to install -->
+    <section class="block install" aria-labelledby="install">
+      <div>
+        <h2 id="install">Open your first shop tonight.</h2>
+        <StoreBadges class="install__badges" />
+      </div>
+      {qrs.length > 0 && (
+        <div class="qrs">
+          {qrs.map((q) => (
+            <figure class="qr">
+              <div class="qr__code" set:html={q.svg} role="img" aria-label={`QR code for Hustle Street on ${q.label}`} />
+              <figcaption class="note">Scan for {q.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </section>
+  </main>
+
+  <!-- 10. Footer -->
+  <footer class="shell hs-footer">
+    <nav aria-label="Hustle Street">
+      <a href="/hustle-street/support">Support</a>
+      <a href="/hustle-street/privacy">Privacy</a>
+      <a href="/hustle-street/terms">Terms</a>
+    </nav>
+    <a href="/">Hustle Street is made by Abren Systems <span class="arrow" aria-hidden="true">→</span></a>
+  </footer>
+</Layout>
+
+<style>
+  /* Bleed: out to the page's edges, past .page's side padding. */
+  .bleed {
+    max-width: none;
+    width: auto;
+    margin-inline: calc(-1 * clamp(20px, 4vw, 64px));
+    padding-inline: clamp(20px, 4vw, 64px);
+  }
+
+  .block {
+    padding-top: clamp(80px, 10vw, 140px);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 500;
+    letter-spacing: -.015em;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  /* 1. Hero: the night street, fading into the page. */
+  .hero-hs {
+    position: relative;
+    isolation: isolate;
+    padding-top: clamp(40px, 6vw, 88px);
+    padding-bottom: clamp(48px, 6vw, 96px);
+    color: #fff;
+    background: #1d1713;
+    overflow: hidden;
+  }
+
+  :global(.hero-hs__art) {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 40%;
+  }
+
+  .hero-hs::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(20, 15, 12, .86) 0%, rgba(20, 15, 12, .62) 55%, rgba(20, 15, 12, .3) 100%),
+      linear-gradient(180deg, transparent 62%, var(--abren-ground) 100%);
+  }
+
+  .hero-hs__inner {
+    max-width: 1280px;
+    margin-inline: auto;
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  :global(.hero-hs__icon) {
+    width: 72px;
+    height: 72px;
+    border-radius: 17px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+  }
+
+  .hero-hs h1 {
+    margin: 20px 0 0;
+    font-size: clamp(44px, 7vw, 88px);
+    color: #fff;
+  }
+
+  .hero-hs__line {
+    margin: 12px 0 0;
+    font-size: clamp(26px, 3.4vw, 40px);
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -.02em;
+    color: #ffc76b;
+  }
+
+  .hero-hs__sub {
+    margin: 16px 0 0;
+    max-width: 30ch;
+    font-size: 19px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, .88);
+  }
+
+  :global(.hero-hs__badges) {
+    margin-top: 32px;
+  }
+
+  .pills {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 28px 0 0;
+    padding: 0;
+  }
+
+  .pills li {
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, .32);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, .28);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .04em;
+    color: #fff;
+  }
+
+  :global(.hero-hs__phone) {
+    --phone-w: 300px;
+    justify-self: center;
+  }
+
+  @media (min-width: 900px) {
+    .hero-hs__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 64px;
+    }
+
+    :global(.hero-hs__phone) {
+      width: 300px;
+    }
+  }
+
+  /* 2. How it plays */
+  .steps {
+    list-style: none;
+    margin: 56px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 64px 40px;
+  }
+
+  .steps li {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+  }
+
+  .steps p {
+    margin: 0;
+    max-width: 34ch;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--abren-ink-2);
+  }
+
+  .steps .step-n {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .1em;
+    color: var(--abren-accent);
+  }
+
+  .steps :global(.phone) {
+    --phone-w: 260px;
+    margin-top: 16px;
+  }
+
+  @media (min-width: 900px) {
+    .steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* 3. Play your way */
+  .ways {
+    margin-top: 56px;
+    display: grid;
+    gap: 64px;
+  }
+
+  .way > p {
+    margin: 12px 0 0;
+    max-width: 40ch;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--abren-ink-2);
+  }
+
+  .rivals {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 28px 0 0;
+    padding: 0;
+  }
+
+  .rivals li {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .rivals :global(img) {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--abren-rule-strong);
+  }
+
+  .way .note {
+    margin-top: 12px;
+  }
+
+  .way :global(.phone) {
+    --phone-w: 260px;
+    margin-top: 32px;
+  }
+
+  .modes {
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--abren-ink);
+    max-width: 440px;
+  }
+
+  .modes li {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--abren-rule);
+    font-size: 17px;
+  }
+
+  @media (min-width: 900px) {
+    .ways {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 64px;
+    }
+  }
+
+  /* 4. Night */
+  .night {
+    margin-top: clamp(80px, 10vw, 140px);
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: clamp(64px, 8vw, 112px);
+    background: #1d1713;
+    color: #fff;
+  }
+
+  .night__inner {
+    max-width: 1280px;
+    margin-inline: auto;
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .night h2 {
+    color: #fff;
+  }
+
+  .night__lede {
+    margin: 16px 0 0;
+    max-width: 36ch;
+    font-size: 19px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, .86);
+  }
+
+  .night .note {
+    color: rgba(255, 255, 255, .7);
+  }
+
+  .fade {
+    position: relative;
+    margin-top: 36px;
+    max-width: 680px;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .fade figure :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .fade figcaption {
+    position: absolute;
+    left: 12px;
+    bottom: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, .55);
+  }
+
+  .fade__night {
+    position: absolute;
+    inset: 0;
+    animation: dusk 12s ease-in-out infinite;
+  }
+
+  @keyframes dusk {
+    0%, 30% { opacity: 0; }
+    45%, 85% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Reduce Motion: no crossfade; day and night side by side. */
+  @media (prefers-reduced-motion: reduce) {
+    .fade {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      border-radius: 0;
+    }
+
+    .fade figure {
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .fade__night {
+      position: relative;
+      inset: auto;
+      animation: none;
+    }
+  }
+
+  :global(.night__phone) {
+    --phone-w: 260px;
+    justify-self: center;
+  }
+
+  @media (min-width: 900px) {
+    .night__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 64px;
+    }
+
+    :global(.night__phone) {
+      width: 260px;
+    }
+  }
+
+  /* 5. Win */
+  .pair {
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 40px;
+  }
+
+  .pair figure {
+    width: min(260px, 100%);
+  }
+
+  .pair figcaption {
+    margin-top: 20px;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  /* 6. Plus */
+  .plus {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .districts {
+    list-style: none;
+    margin: 36px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .districts li {
+    padding: 20px 22px;
+    border: 1px solid var(--abren-rule-strong);
+    border-radius: 14px;
+    background: #fbfaf6;
+  }
+
+  .districts p {
+    margin: 6px 0 0;
+    font-size: 16px;
+    color: var(--abren-ink-2);
+  }
+
+  .plus__terms {
+    margin: 28px 0 0;
+    max-width: 52ch;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  :global(.plus__phone) {
+    --phone-w: 280px;
+    justify-self: center;
+  }
+
+  @media (min-width: 700px) {
+    .districts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .plus {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 72px;
+    }
+
+    :global(.plus__phone) {
+      width: 280px;
+    }
+  }
+
+  /* 7. Screenshots: a snapping scroller; arrows where the browser draws CSS scroll buttons. */
+  .shots-wrap {
+    position: relative;
+    margin-top: 48px;
+  }
+
+  .shots {
+    list-style: none;
+    margin: 0;
+    padding: 4px 4px 16px;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .shots:focus-visible {
+    outline: 1px solid var(--abren-accent);
+    outline-offset: 4px;
+  }
+
+  .shots li {
+    flex: 0 0 auto;
+    width: min(62vw, 240px);
+    scroll-snap-align: start;
+  }
+
+  .shots :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+  }
+
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    .shots {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Arrow buttons: /hustle-street.js wires them and sets data-ready; desktop only. */
+  .shots__btn {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    [data-ready] {
+      padding-inline: 56px;
+    }
+
+    [data-ready] .shots__btn {
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--abren-ink);
+      border-radius: 50%;
+      background: var(--abren-ground);
+      color: var(--abren-ink);
+      font: 500 20px/1 var(--font-sans);
+      cursor: pointer;
+    }
+
+    .shots__btn--prev {
+      left: 0;
+    }
+
+    .shots__btn--next {
+      right: 0;
+    }
+
+    [data-ready] .shots__btn:hover:not(:disabled) {
+      color: var(--abren-accent);
+      border-color: var(--abren-accent);
+    }
+
+    [data-ready] .shots__btn:disabled {
+      opacity: .3;
+      cursor: default;
+    }
+
+    [data-ready] .shots__btn:focus-visible {
+      outline: 1px solid var(--abren-accent);
+      outline-offset: 3px;
+    }
+  }
+
+  /* 8. Fair by design */
+  .fair {
+    list-style: none;
+    margin: 48px 0 0;
+    padding: 0;
+    max-width: 880px;
+    border-top: 1px solid var(--abren-ink);
+  }
+
+  .fair li {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--abren-rule);
+    font-size: 19px;
+  }
+
+  .fair strong {
+    font-weight: 500;
+  }
+
+  /* 9. Install */
+  .install {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+    padding-bottom: clamp(80px, 10vw, 140px);
+  }
+
+  :global(.install__badges) {
+    margin-top: 32px;
+  }
+
+  .qrs {
+    display: none;
+    gap: 28px;
+  }
+
+  .qr__code {
+    width: 132px;
+    height: 132px;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid var(--abren-rule-strong);
+  }
+
+  .qr__code :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .qr figcaption {
+    margin-top: 10px;
+  }
+
+  @media (min-width: 900px) {
+    .install {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .qrs {
+      display: flex;
+    }
+  }
+
+  /* 10. Footer */
+  .hs-footer {
+    margin-top: auto;
+    border-top: 1px solid var(--abren-rule);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    padding: 28px 0 40px;
+    font-size: 15px;
+  }
+
+  .hs-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+
+  .hs-footer > a {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+</style>
