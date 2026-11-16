@@ -1,0 +1,51 @@
+---
+// One game screen in a plain device frame: a dark rounded bezel. The screens already carry the
+// status bar and the Dynamic Island, so the frame draws neither.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /** Rendered width in CSS px at its largest; sets the srcset. */
+  width?: number;
+  priority?: boolean;
+  class?: string;
+}
+
+const { src, alt, width = 280, priority = false, class: extra } = Astro.props;
+const widths = [width, Math.min(width * 2, src.width)];
+---
+
+<div class:list={['phone', extra]}>
+  <Image
+    src={src}
+    alt={alt}
+    widths={widths}
+    sizes={`${width}px`}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : undefined}
+    decoding="async"
+  />
+</div>
+
+<style>
+  .phone {
+    width: 100%;
+    max-width: var(--phone-w, 280px);
+    padding: 3.2%;
+    border-radius: 15% / 7%;
+    background: #121110;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .08) inset,
+      0 24px 48px -18px rgba(23, 22, 15, .45),
+      0 2px 6px rgba(23, 22, 15, .18);
+  }
+
+  .phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12.4% / 5.8%;
+  }
+</style>

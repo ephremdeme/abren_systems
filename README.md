@@ -1,7 +1,9 @@
 # abrensystems.com
 
-The one-page company site for Abren Systems LLC. It is a static Astro build with
-no client-side JavaScript, deployed to Cloudflare Pages.
+The one-page company site for Abren Systems LLC. It is a static Astro build,
+deployed to Cloudflare Pages. Its only client-side JavaScript is `public/hustle-street.js`
+(store badge order by platform, the screenshot arrows), served from this origin; the CSP allows
+scripts from `'self'` only, and every page works without it.
 
 ## Commands
 
@@ -38,8 +40,8 @@ Or push a build straight from a workstation with `npm run deploy`.
 ### Keep these Cloudflare features OFF for this site
 
 - **Email Address Obfuscation** (Scrape Shield) — it rewrites the three `mailto:`
-  links and injects a script. The CSP blocks that script, and it breaks the
-  site's no-JavaScript guarantee.
+  links and injects a script. The CSP blocks that script (it allows
+  only this site's own `hustle-street.js`).
 - **Web Analytics auto-injection** — same reason: injected script.
 - **Rocket Loader** — same reason: injected script.
 
